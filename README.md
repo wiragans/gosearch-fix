@@ -15,7 +15,7 @@ LINK DEMO: https://subtle-torus-235508.web.app
 
 DEMO On YouTube: https://www.youtube.com/watch?v=PyweZ19Lv9A
 
-Requirements:
+Requirements Khusus:
 - Wajib instal dan update composer dengan command: composer update -vv untuk Backend REST API (CodeIgniter 3)
 - PHP Version 7.2 or +
 - Dokumentasi API: https://github.com/wiragans/gosearch-searchengine-api
