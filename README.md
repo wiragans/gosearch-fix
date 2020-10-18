@@ -13,6 +13,8 @@ Dosen Pengampu: Dr. Drs. Eri Zuliarso, M.Kom
 
 LINK DEMO: https://subtle-torus-235508.web.app
 
+DEMO On YouTube: https://www.youtube.com/watch?v=PyweZ19Lv9A
+
 Requirements:
 - Wajib instal dan update composer dengan command: composer update -vv untuk Backend REST API.
 - Dokumentasi API: https://github.com/wiragans/gosearch-searchengine-api
