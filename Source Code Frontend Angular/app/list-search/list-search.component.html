@@ -1,0 +1,113 @@
+<nav>
+  <ul>
+    <li class="icon" [routerLink]="['/']">
+      <span class="fa fa-arrow-left"></span> Home
+    </li>
+    <li class="items" [routerLink]="['/upload']">
+      <span>Upload Dokumen</span>
+    </li>
+  </ul>
+</nav>
+
+<div class="container">
+
+  <div class="search-container">
+
+    <div class="logo">
+      <img src="/assets/logo.png" [routerLink]="['/']">
+    </div>
+
+    <div class="search">
+      <input type="text" placeholder="Kata Kunci" (keyup.enter)="goSearch()" [formControl]="searchValue">
+      <button (click)="goSearch()" [disabled]="!searchValue.value">
+        <i class="fa fa-search"></i>
+      </button>
+    </div>
+
+    <div class="settingChecker">
+      <input type="checkbox" id="vector" (change)="vectorSearch = !vectorSearch" [checked]="vectorSearch">
+      <label for="vector">Vector Space Model (Jaccard)</label>
+    </div>
+
+    <div class="searchInfo not-mobile" *ngIf="searchInfo">
+      <ul>
+        <li>
+          <i class="fa fa-list-ul" aria-hidden="true"></i>
+          Di temukan <span>{{ searchInfo.jumlah }}</span>
+        </li>
+        <li>
+          <i class="fa fa-clock-o" aria-hidden="true"></i>
+          Memuat database <span>{{ searchInfo.durasi }}</span> | Memuat pencarian <span>{{ searchInterval }}
+            detik</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="searchInfo mobile" *ngIf="searchInfo">
+      <ul>
+        <li>
+          <i class="fa fa-list-ul" aria-hidden="true"></i>
+          Di temukan <span>{{ searchInfo.jumlah }}</span>
+        </li>
+        <li>
+          <i class="fa fa-clock-o" aria-hidden="true"></i>
+          Memuat database <span>{{ searchInfo.durasi }}</span>
+        </li>
+        <li>
+          <i class="fa fa-clock-o" aria-hidden="true"></i>
+          Memuat pencarian <span>{{ searchInterval }}
+            detik</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="search-result">
+      <div class="searchLoad" *ngIf="searchLoad">
+        <img src="/assets/loading.gif">
+      </div>
+
+      <div *ngIf="searchData && searchData[page]" class="search-result_">
+        <h2 class="pagetitle">
+          <i class="fa fa-circle" aria-hidden="true"></i>
+          Page {{ searchData[page]['page'] }}
+        </h2>
+        <ul>
+          <li *ngFor="let a of searchData[page].data" (click)="download(a.file_download_url)">
+            <div class="file">
+              <h3>[<span>{{ a.dokumen_id }}</span>] {{ a.post_title }}</h3>
+              <h4><i class="fa fa-file-pdf-o" aria-hidden="true"></i> {{ a.nama_file }}</h4>
+              <div class="infoFile">
+                <span>
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                  {{ a.uploaded_by }}
+                </span>
+                <span>
+                  <i class="fa fa-clock-o" aria-hidden="true"></i>
+                  {{ a.uploaded_at_timestamp | date }}
+                </span>
+              </div>
+              <div class="snippet" [innerHTML]="a.post_desc | bold: this.value">
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div *ngIf="searchData && !searchData[page]" class="errorResult">
+        <i class="fa fa-times" aria-hidden="true"></i> Tidak ada post di page {{ page_ }}.
+      </div>
+
+      <div *ngIf="!searchData && searchEnt" class="errorResult">
+        <i class="fa fa-times" aria-hidden="true"></i> Dokumen yang anda cari tidak ada.
+      </div>
+
+      <div class="pagination" *ngIf="searchData">
+        <span *ngFor="let a of searchData;let i = index" [routerLink]="['/search', value, i+1, methodSearch]"
+          [routerLinkActive]="['active']">{{ a.page }}</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

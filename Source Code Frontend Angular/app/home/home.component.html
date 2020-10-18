@@ -1,0 +1,35 @@
+<div class="container-body">
+  <div class="container-1">
+
+    <div class="container" [style.paddingBottom.px]="footertampil.offsetHeight">
+      <div class="content">
+        <div class="logo">
+          <img src="{{ urlWeb }}">
+        </div>
+        <div class="search-columns">
+          <input type="text" placeholder="Kata Kunci" (click)="berubah()" [ngClass]="{'input_s': input_s}" #toggleButton
+            [formControl]="searchValue" (keyup.enter)="goSearch()">
+
+          <i class="fa fa-search" [ngClass]="{'button_s': button_s}" (click)="berubah()" #searchicon></i>
+          
+        </div>
+        <div class="settingChecker">
+          <input type="checkbox" id="vector" (change)="vectorSearch = !vectorSearch" [checked]="vectorSearch">
+          <label for="vector">Vector Space Model (Jaccard)</label>
+        </div>
+        <div class="footer-search">
+          <button class="search-button" [disabled]="!searchValue.value"
+            (click)="goSearch()">Cari Dokumen</button>
+          <button class="upload-button" [routerLink]="['/upload']"><i class="fa fa-cloud-upload"></i> Unggah
+            Dokumen</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-tampilan" #footertampil>
+      Privacy Policy
+    </div>
+
+  </div>
+
+</div>

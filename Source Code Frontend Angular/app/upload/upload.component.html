@@ -1,0 +1,115 @@
+<nav>
+  <ul>
+    <li class="icon" [routerLink]="['/']">
+      <span class="fa fa-arrow-left"></span> Home
+    </li>
+    <!-- <li class="items">
+      <span>Home</span>
+    </li> -->
+  </ul>
+</nav>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h3 class="title">
+        Upload
+      </h3>
+      <h4 class="title_">
+        Nama Uploader (<span>Required</span>)
+      </h4>
+      <input type="text" [formControl]="userName" class="input-user" placeholder="Nama Uploader">
+      <div class="upload" (click)="fileInput.click()" (onFileDropped)="uploadFile($event)" appAppDragDrop>
+        Select of Drag & Drop
+        <input hidden type="file" #fileInput (change)="uploadFile($event.target.files)" multiple
+          accept="application/pdf">
+      </div>
+
+      <div class="sukses" *ngIf="suksesUpload">
+        {{ suksesUpload }}
+      </div>
+
+      <div *ngIf="suksesUpload">
+        <div class="upload-status" *ngIf="suksesUpload.length > 0">
+          <h3 class="title">
+            Upload Status
+          </h3>
+          <ul>
+            <li *ngFor="let a of uploadList">
+              <div [ngClass]="{'sukses_': a.status == 1, 'gagal_': a.status == 0}">
+                <h4>{{ a.title }}</h4>
+                Status: {{ a.status? 'Sukses' : 'Gagal' }}
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div *ngIf="uploadData && dataUpload.length > 0">
+        <h3 class="title">
+          Upload List
+        </h3>
+        <div class="upload-list" *ngIf="uploadData">
+          <ul *ngIf="dataUpload">
+            <li *ngFor="let a of dataUpload;let i=index">
+              <h4>
+                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                {{ a.data.name }}
+                <i class="fa fa-times" aria-hidden="true" (click)="hilangin(i)"></i>
+              </h4>
+              <div class="data" *ngIf="a.status">
+                <input [formControl]="titleFile.controls[i]" class="title_pdf" placeholder="Judul" type="text" />
+                <div *ngIf="titleEmpty.length > 0" class="titlEmp">
+                  {{ titleEmpty[i].id == i? titleEmpty[i].msg : '' }}
+                </div>
+              </div>
+              <div *ngIf="!a.status" class="tidak-boleh">
+                File tidak diperbolehkan.
+              </div>
+            </li>
+          </ul>
+
+          <div class="upload-disabled-file" *ngIf="loading"></div>
+
+          <div class="uploadLoading" *ngIf="loading">
+            <img src="/assets/loading.gif">
+          </div>
+
+        </div>
+        <button class="upload_" *ngIf="uploadData"
+          [disabled]="loading || !userName.value || dataUpload.length == 0 || uploadCheckTitle"
+          (click)="uploadDocumment()">
+          <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+          Upload
+        </button>
+      </div>
+    </div>
+    
+    <div class="col">
+      <h3 class="title">
+        Dokumen yang baru ditambahkan
+      </h3>
+      <ul class="lastest" *ngIf="latestUp">
+        <li *ngFor="let a of latestUp" (click)="download(a.file_download_url)">
+          <div class="info">
+            <h4>
+              <i class="fa fa-file-pdf-o" aria-hidden="true"></i> [<span>{{ a.dokumen_id }}</span>] {{ a.post_title }}
+            </h4>
+            <div class="info-2">
+              <div class="date">
+                <i class="fa fa-calendar" aria-hidden="true"></i> {{ a.uploaded_at_timestamp | date }}
+              </div>
+              <div class="date">
+                <i class="fa fa-user" aria-hidden="true"></i>
+                {{ a.uploaded_by }}
+              </div>
+            </div>
+            <div class="snippet">
+              {{ a.post_desc | limit }}
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
